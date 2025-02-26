@@ -32,14 +32,14 @@ Request:
 
 ```json
 {
-	"source_triple": "groth16-bn254-risc0/1.4.0",
-	"target_chain": "evm",
-	"proof_infos": [
-		{
-		    "proof": "",
-		    "output_digest": "",
-		    "program_id": ""
-	    }
+    "source_triple": "groth16-bn254-risc0/1.4.0",
+    "target_chain": "evm",
+    "proof_infos": [
+        {
+            "proof": "",
+            "output_digest": "",
+            "program_id": ""
+        }
     ]
 }
 ```
@@ -48,12 +48,12 @@ Response:
 
 ```json
 {
-	"code": 0,
-	"message": "success",
-	"data": {
-	    "proof_id": "",
-	    "target_triple": "groth16-bn254-risc0/1.4.0",
-	    "selector": "0xaabbccdd"
+    "code": 0,
+    "message": "success",
+    "data": {
+        "proof_id": "",
+        "target_triple": "groth16-bn254-risc0/1.4.0",
+        "selector": "0xaabbccdd"
     }
 }
 ```
@@ -66,12 +66,12 @@ Response:
 
 ```json
 {
-	"code": 0,
-	"message": "success",
-	"data": {
-	    "proof": "",
-	    "output_digest": "",
-	    "program_id": ""
+    "code": 0,
+    "message": "success",
+    "data": {
+        "proof": "",
+        "output_digest": "",
+        "program_id": ""
     }
 }
 ```
