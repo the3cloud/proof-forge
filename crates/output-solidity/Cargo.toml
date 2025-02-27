@@ -1,0 +1,6 @@
+[package]
+name = "proof-forge-output-solidity"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
