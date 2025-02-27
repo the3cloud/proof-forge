@@ -1,3 +1,5 @@
+use alloy_primitives::U256;
+
 use crate::{G1Point, G2Point};
 
 #[derive(Debug, Clone)]
@@ -17,6 +19,6 @@ pub struct VerificationKey {
 }
 
 #[derive(Debug, Clone)]
-pub struct PublicSignals {
-    pub pub_signals: Vec<G1Point>,
+pub struct PublicOutputs {
+    pub pub_signals: Vec<U256>,
 }
