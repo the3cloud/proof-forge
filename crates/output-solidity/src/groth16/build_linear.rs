@@ -11,7 +11,7 @@ pub fn build_linear(vkey: &VerificationKey) -> Result<String> {
     for i in 0..ic.len() {
         writeln!(
             s,
-            "g1_mulAccC(_pVk, IC{}x, IC{}y, calldataload(add(pubSignals, {})))",
+            "                g1_mulAccC(_pVk, IC{}x, IC{}y, calldataload(add(pubSignals, {})))",
             i,
             i,
             i * 32

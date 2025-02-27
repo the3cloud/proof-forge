@@ -72,6 +72,7 @@ mod tests {
 
         let core_vk = vk.into_core_type().unwrap();
 
-        println!("{:#?}", core_vk);
+        let s = serde_json::to_string(&core_vk).unwrap();
+        println!("{}", s);
     }
 }

@@ -7,3 +7,6 @@ edition.workspace = true
 proof-forge-core = { workspace = true }
 
 anyhow = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

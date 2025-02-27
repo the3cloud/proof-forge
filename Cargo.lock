@@ -883,6 +883,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "proof-forge-core",
+ "serde_json",
 ]
 
 [[package]]

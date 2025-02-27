@@ -23,3 +23,18 @@ pub fn build_verifier(vkey: &VerificationKey) -> Result<String> {
 
     Ok(s)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_build_verifier() {
+        let vkey: VerificationKey =
+            serde_json::from_str(include_str!("../../testdata/verifying_key.json")).unwrap();
+
+        let s = build_verifier(&vkey).unwrap();
+
+        println!("{}", s);
+    }
+}
