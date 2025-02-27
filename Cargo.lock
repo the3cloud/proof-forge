@@ -862,6 +862,7 @@ name = "proof-forge-input-snarkjs"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "proof-forge-core",
  "serde",
  "serde_json",
 ]
