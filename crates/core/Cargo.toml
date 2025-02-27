@@ -8,3 +8,5 @@ alloy-primitives = { workspace = true, features = ["serde"] }
 anyhow = { workspace = true }
 
 serde = { workspace = true }
+
+regex = { workspace = true }

@@ -4,3 +4,10 @@ version = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
+clap = { workspace = true }
+
+anyhow = { workspace = true }
+
+proof-forge-core = { workspace = true }
+proof-forge-input-snarkjs = { workspace = true }
+proof-forge-output-solidity = { workspace = true }

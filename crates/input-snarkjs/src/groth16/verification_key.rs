@@ -4,17 +4,17 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct VerificationKey {
-    protocol: String,
-    curve: String,
+    pub protocol: String,
+    pub curve: String,
     #[serde(rename = "nPublic")]
-    n_public: u64,
+    pub n_public: u64,
 
-    vk_alpha_1: Vec<String>,
-    vk_beta_2: Vec<Vec<String>>,
-    vk_gamma_2: Vec<Vec<String>>,
-    vk_delta_2: Vec<Vec<String>>,
+    pub vk_alpha_1: Vec<String>,
+    pub vk_beta_2: Vec<Vec<String>>,
+    pub vk_gamma_2: Vec<Vec<String>>,
+    pub vk_delta_2: Vec<Vec<String>>,
     #[serde(rename = "IC")]
-    ics: Vec<Vec<String>>,
+    pub ics: Vec<Vec<String>>,
 }
 
 impl VerificationKey {
