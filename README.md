@@ -4,6 +4,10 @@
 
 ## Features
 
+- Provide generic verifier contract for all supported chain.
+- Export verifier contract for special circuit.
+- Widely supports multiple proof system implementations.
+
 ## Supported
 
 ### zkProof Implementation
