@@ -27,56 +27,20 @@
 - [ ] Move
 - [ ] Cairo
 
-## `Forge` Service
+## Usage
 
-### Forge proof
+### Export Verifier Contract
 
-POST `/api/v1/forge`
+### Forge VerifyingKey / Proof / PublicInput
 
-Request:
+You can forge output of zkproof implementation to used them in generic verifier contract.
 
-```json
-{
-    "source_triple": "groth16-bn254-risc0/1.4.0",
-    "target_chain": "evm",
-    "proof_infos": [
-        {
-            "proof": "",
-            "output_digest": "",
-            "program_id": ""
-        }
-    ]
-}
+## Proof Triple
+
+The `Proof Triple` is a string to identify the proof type. It have the following format:
+
+```
+<algorithm>-<implementation>-<curve>:<version>
 ```
 
-Response:
 
-```json
-{
-    "code": 0,
-    "message": "success",
-    "data": {
-        "proof_id": "",
-        "target_triple": "groth16-bn254-risc0/1.4.0",
-        "selector": "0xaabbccdd"
-    }
-}
-```
-
-### Get forged result
-
-GET `/api/v1/proof/<proof_id>`
-
-Response:
-
-```json
-{
-    "code": 0,
-    "message": "success",
-    "data": {
-        "proof": "",
-        "output_digest": "",
-        "program_id": ""
-    }
-}
-```
