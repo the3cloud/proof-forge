@@ -4,3 +4,6 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+proof-forge-core = { workspace = true }
+
+anyhow = { workspace = true }

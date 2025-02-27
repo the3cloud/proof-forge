@@ -1,7 +1,8 @@
 use alloy_primitives::U256;
 use anyhow::Result;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct G1Point {
     pub x: U256,
     pub y: U256,
@@ -16,7 +17,7 @@ impl G1Point {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct G2Point {
     pub x0: U256,
     pub x1: U256,
