@@ -4,17 +4,18 @@
 
 ## Features
 
-- A set of contract in multi chain to verify all supported platform.
-- A service to `forge` your proof into a united contracts.
+## Supported
 
-## Platform
+### zkProof Implementation
 
-Support Prover System:
+- [ ] snarkjs
+- [ ] arkworks
+- [ ] gnark
+- [ ] zkvm
+  - [ ] risc0
+  - [ ] sp1
 
-- Risc0
-- Sp1
-
-Support Chain:
+### Support Chain
 
 - EVM
 - [ ] Solana
