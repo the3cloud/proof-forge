@@ -1,9 +1,15 @@
 [workspace]
 resolver = "2"
-members = ["forgeproof"]
+members = ["crates/core", "crates/input-snarkjs", "forgeproof"]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
 
 [workspace.dependencies]
+alloy-primitives = "0.8.21"
+
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.105"
+
+anyhow = "1.0.95"
