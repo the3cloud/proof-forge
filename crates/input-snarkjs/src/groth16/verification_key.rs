@@ -1,5 +1,5 @@
 use anyhow::{Ok, Result};
-use proof_forge_core::{groth16, G1Point, G2Point};
+use proof_forge_core::{groth16, G1Point, G2Point, ZKProofCurve};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -20,10 +20,30 @@ pub struct VerificationKey {
 impl VerificationKey {
     pub fn from_str(s: &str) -> Result<Self> {
         let vk: Self = serde_json::from_str(s)?;
+
+        if vk.protocol != "groth16" {
+            return Err(anyhow::anyhow!(
+                "Invalid protocol, only groth16 is supported"
+            ));
+        }
+
+        if vk.curve != "bn254" && vk.curve != "bn128" && vk.curve != "bls12-381" {
+            return Err(anyhow::anyhow!(
+                "Invalid curve, only bn254, bn128 and bls12-381 are supported"
+            ));
+        }
+
         Ok(vk)
     }
 
     pub fn into_core_type(self) -> Result<groth16::VerificationKey> {
+        let curve = match self.curve.as_str() {
+            "bn254" => ZKProofCurve::BN254,
+            "bn128" => ZKProofCurve::BN254,
+            "bls12-381" => ZKProofCurve::BLS12_381,
+            _ => return Err(anyhow::anyhow!("Invalid curve")),
+        };
+
         let alpha = G1Point::from_oct_str(&self.vk_alpha_1[0], &self.vk_alpha_1[1])?;
         let beta = G2Point::from_oct_str(
             &self.vk_beta_2[0][1],
@@ -52,7 +72,8 @@ impl VerificationKey {
         }
 
         Ok(groth16::VerificationKey {
-            n_public: self.n_public,
+            curve,
+
             alpha,
             beta,
             gamma,

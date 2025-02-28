@@ -2,25 +2,19 @@ use std::sync::LazyLock;
 
 use anyhow::Result;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ZKProofAlgorithm {
     Groth16,
     PLONK,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ZKProofCurve {
+    #[serde(rename = "bn254")]
     BN254,
+    #[serde(rename = "bls12-381")]
     BLS12_381,
-}
-
-impl ZKProofCurve {
-    pub fn to_str(&self) -> &str {
-        match self {
-            ZKProofCurve::BN254 => "bn254",
-            ZKProofCurve::BLS12_381 => "bls12_381",
-        }
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

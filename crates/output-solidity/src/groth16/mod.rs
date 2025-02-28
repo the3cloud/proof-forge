@@ -21,7 +21,7 @@ pub fn build_verifier(vkey: &VerificationKey) -> Result<String> {
             "<%validate_evaluations%>",
             &build_validate::build_validate(vkey)?,
         )
-        .replace("<%n_public%>", &format!("{}", vkey.n_public));
+        .replace("<%n_public%>", &format!("{}", vkey.n_public()));
 
     Ok(s)
 }

@@ -17,9 +17,7 @@ contract Groth16Verifier {
     uint16 constant pLastMem = 896;
 
     function verifyProof(
-        uint256[2] calldata _pA,
-        uint256[2][2] calldata _pB,
-        uint256[2] calldata _pC,
+        uint265[8] calldata _proof
         uint256[<%n_public%>] calldata _pubSignals
     ) public view returns (bool) {
         assembly {
@@ -56,7 +54,7 @@ contract Groth16Verifier {
                 }
             }
 
-            function checkPairing(pA, pB, pC, pubSignals, pMem) -> isOk {
+            function checkPairing(proof, pubSignals, pMem) -> isOk {
                 let _pPairing := add(pMem, pPairing)
                 let _pVk := add(pMem, pVk)
 
@@ -67,14 +65,14 @@ contract Groth16Verifier {
 <%linear_combination_vk_x%>
 
                 // -A
-                mstore(_pPairing, calldataload(pA))
-                mstore(add(_pPairing, 32), mod(sub(q, calldataload(add(pA, 32))), q))
+                mstore(_pPairing, calldataload(proof))
+                mstore(add(_pPairing, 32), mod(sub(q, calldataload(add(proof, 32))), q))
 
                 // B
-                mstore(add(_pPairing, 64), calldataload(pB))
-                mstore(add(_pPairing, 96), calldataload(add(pB, 32)))
-                mstore(add(_pPairing, 128), calldataload(add(pB, 64)))
-                mstore(add(_pPairing, 160), calldataload(add(pB, 96)))
+                mstore(add(_pPairing, 64), calldataload(add(proof, 64)))
+                mstore(add(_pPairing, 96), calldataload(add(proof, 96)))
+                mstore(add(_pPairing, 128), calldataload(add(proof, 128)))
+                mstore(add(_pPairing, 160), calldataload(add(proof, 160)))
 
                 // alpha1
                 mstore(add(_pPairing, 192), alphax)
@@ -97,8 +95,8 @@ contract Groth16Verifier {
                 mstore(add(_pPairing, 544), gammay2)
 
                 // C
-                mstore(add(_pPairing, 576), calldataload(pC))
-                mstore(add(_pPairing, 608), calldataload(add(pC, 32)))
+                mstore(add(_pPairing, 576), calldataload(add(proof, 192)))
+                mstore(add(_pPairing, 608), calldataload(add(proof, 224)))
 
                 // delta2
                 mstore(add(_pPairing, 640), deltax1)
@@ -118,7 +116,7 @@ contract Groth16Verifier {
 <%validate_evaluations%>
 
             // Validate all evaluations
-            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)
+            let isValid := checkPairing(_proof, _pubSignals, pMem)
 
             mstore(0, isValid)
             return(0, 0x20)
