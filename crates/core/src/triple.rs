@@ -83,6 +83,7 @@ impl Triple {
 
         let curve = match curve {
             "bn254" => ZKProofCurve::BN254,
+            "bn128" => ZKProofCurve::BN254,
             "bls12_381" => ZKProofCurve::BLS12_381,
             _ => return Err(anyhow::anyhow!("Invalid curve")),
         };

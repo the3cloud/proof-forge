@@ -4,11 +4,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Proof {
-    protocol: String,
-    curve: String,
-    pi_a: Vec<String>,
-    pi_b: Vec<Vec<String>>,
-    pi_c: Vec<String>,
+    pub protocol: String,
+    pub curve: String,
+    pub pi_a: Vec<String>,
+    pub pi_b: Vec<Vec<String>>,
+    pub pi_c: Vec<String>,
 }
 
 impl Proof {

@@ -1,14 +1,7 @@
 use anyhow::Result;
 use proof_forge_core::{Triple, ZKProofAlgorithm, ZKProofImplementation};
 
-#[derive(Debug, Clone, PartialEq, Eq, clap::ValueEnum)]
-pub enum Target {
-    EVM,
-    Solana,
-    Ton,
-    Move,
-    Cairo,
-}
+use super::target::Target;
 
 #[derive(Debug, clap::Parser)]
 pub struct Args {
@@ -32,7 +25,7 @@ impl Args {
         match (&triple.algorithm, &triple.implementation, &self.target) {
             (ZKProofAlgorithm::Groth16, ZKProofImplementation::Snarkjs, Target::EVM) => {
                 let vk = proof_forge_input_snarkjs::handle_groth16_verifying_key(
-                    triple,
+                    &triple,
                     &verifying_key,
                 )?;
 

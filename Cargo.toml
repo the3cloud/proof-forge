@@ -25,3 +25,5 @@ proof-forge-output-solidity = { path = "crates/output-solidity" }
 clap = { version = "4.5.18", features = ["derive"] }
 
 regex = "1.11.1"
+
+hex = "0.4.3"

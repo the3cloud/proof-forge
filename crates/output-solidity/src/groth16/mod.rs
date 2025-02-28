@@ -1,11 +1,12 @@
 use anyhow::Result;
 use proof_forge_core::groth16::VerificationKey;
 
+mod build_linear;
+mod build_validate;
 mod build_vkey;
 
-mod build_linear;
-
-mod build_validate;
+mod build_calldata;
+pub use build_calldata::*;
 
 pub fn build_verifier(vkey: &VerificationKey) -> Result<String> {
     let s = include_str!("verifier.sol.template");

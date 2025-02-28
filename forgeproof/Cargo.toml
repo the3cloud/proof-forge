@@ -8,6 +8,8 @@ clap = { workspace = true }
 
 anyhow = { workspace = true }
 
+hex = { workspace = true }
+
 proof-forge-core = { workspace = true }
 proof-forge-input-snarkjs = { workspace = true }
 proof-forge-output-solidity = { workspace = true }
