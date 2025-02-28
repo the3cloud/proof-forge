@@ -4,7 +4,7 @@ members = [
     "crates/core",
     "crates/input-snarkjs",
     "crates/output-solidity",
-    # "forgeproof",
+    "forgeproof",
 ]
 
 [workspace.package]
