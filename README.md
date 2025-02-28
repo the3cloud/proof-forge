@@ -12,7 +12,7 @@
 
 ### zkProof Implementation
 
-- [ ] snarkjs
+- snarkjs
 - [ ] arkworks
 - [ ] gnark
 - [ ] zkvm
