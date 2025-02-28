@@ -23,9 +23,19 @@
 
 - EVM
 - [ ] Solana
-- [ ] Ton
 - [ ] Move
 - [ ] Cairo
+- [ ] Ton
+
+### Supported Algorithm
+
+- Groth16
+- [ ] PLONK
+
+### Supported Curve
+
+- BN254
+- [ ] BLS12-381
 
 ## Usage
 
