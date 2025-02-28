@@ -1,4 +1,4 @@
-# Proof Forge Contracts
+# Proof Forge
 
 > Unified Verifier for difference zk system.
 
