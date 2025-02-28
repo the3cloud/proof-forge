@@ -22,6 +22,7 @@
 ### Support Chain
 
 - EVM
+- [ ] EVM:Prague (support bls12-381)
 - [ ] Solana
 - [ ] Move
 - [ ] Cairo
