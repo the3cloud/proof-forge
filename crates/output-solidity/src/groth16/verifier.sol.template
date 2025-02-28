@@ -17,7 +17,7 @@ contract Groth16Verifier {
     uint16 constant pLastMem = 896;
 
     function verifyProof(
-        uint265[8] calldata _proof
+        uint256[8] calldata _proof,
         uint256[<%n_public%>] calldata _pubSignals
     ) public view returns (bool) {
         assembly {

@@ -1,5 +1,5 @@
 {
-    "n_public": 1,
+    "curve": "bn254",
     "alpha": {
         "x": "0xaae2d8bc11c1151af331bfd2bd6c1e97daa416f4dabe2bec0cc65fadd01a307",
         "y": "0x1e95b2a5bd7ab12ceb946fe58a80a1668e996f239420f4fd2a1221dd84ed9aba"
