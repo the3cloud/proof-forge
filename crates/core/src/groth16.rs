@@ -11,6 +11,7 @@ pub struct Proof {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct VerificationKey {
+    pub n_public: u64,
     pub alpha: G1Point,
     pub beta: G2Point,
     pub gamma: G2Point,

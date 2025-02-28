@@ -8,13 +8,13 @@ pub fn build_linear(vkey: &VerificationKey) -> Result<String> {
 
     let ic = &vkey.ic;
 
-    for i in 0..ic.len() {
+    for i in 1..ic.len() {
         writeln!(
             s,
             "                g1_mulAccC(_pVk, IC{}x, IC{}y, calldataload(add(pubSignals, {})))",
             i,
             i,
-            i * 32
+            (i - 1) * 32
         )?;
     }
 

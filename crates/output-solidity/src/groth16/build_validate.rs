@@ -6,7 +6,7 @@ use std::fmt::Write;
 pub fn build_validate(vkey: &VerificationKey) -> Result<String> {
     let mut s = String::new();
 
-    for i in 0..vkey.ic.len() {
+    for i in 0..vkey.ic.len() - 1 {
         writeln!(
             s,
             "            checkField(calldataload(add(_pubSignals, {})))",

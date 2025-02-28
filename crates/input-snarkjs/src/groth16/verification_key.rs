@@ -26,22 +26,22 @@ impl VerificationKey {
     pub fn into_core_type(self) -> Result<groth16::VerificationKey> {
         let alpha = G1Point::from_oct_str(&self.vk_alpha_1[0], &self.vk_alpha_1[1])?;
         let beta = G2Point::from_oct_str(
-            &self.vk_beta_2[0][0],
             &self.vk_beta_2[0][1],
-            &self.vk_beta_2[1][0],
+            &self.vk_beta_2[0][0],
             &self.vk_beta_2[1][1],
+            &self.vk_beta_2[1][0],
         )?;
         let gamma = G2Point::from_oct_str(
-            &self.vk_gamma_2[0][0],
             &self.vk_gamma_2[0][1],
-            &self.vk_gamma_2[1][0],
+            &self.vk_gamma_2[0][0],
             &self.vk_gamma_2[1][1],
+            &self.vk_gamma_2[1][0],
         )?;
         let delta = G2Point::from_oct_str(
-            &self.vk_delta_2[0][0],
             &self.vk_delta_2[0][1],
-            &self.vk_delta_2[1][0],
+            &self.vk_delta_2[0][0],
             &self.vk_delta_2[1][1],
+            &self.vk_delta_2[1][0],
         )?;
 
         let mut ics = Vec::new();
@@ -52,6 +52,7 @@ impl VerificationKey {
         }
 
         Ok(groth16::VerificationKey {
+            n_public: self.n_public,
             alpha,
             beta,
             gamma,
