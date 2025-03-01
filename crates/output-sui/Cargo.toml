@@ -1,0 +1,6 @@
+[package]
+name = "proof-forge-output-sui"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

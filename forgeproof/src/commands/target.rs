@@ -3,6 +3,6 @@ pub enum Target {
     EVM,
     Solana,
     Ton,
-    Move,
+    Sui,
     Cairo,
 }

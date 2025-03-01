@@ -15,6 +15,16 @@ impl G1Point {
 
         Ok(Self { x, y })
     }
+
+    #[cfg(feature = "arkworks")]
+    pub fn to_arkworks(&self) -> ark_bn254::G1Affine {
+        use ark_ff::PrimeField;
+
+        let x_point = ark_bn254::Fq::from_le_bytes_mod_order(&self.x.to_le_bytes_vec());
+        let y_point = ark_bn254::Fq::from_le_bytes_mod_order(&self.y.to_le_bytes_vec());
+
+        ark_bn254::G1Affine::new(x_point, y_point)
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -33,5 +43,29 @@ impl G2Point {
         let y1: U256 = y1.parse()?;
 
         Ok(Self { x0, x1, y0, y1 })
+    }
+
+    #[cfg(feature = "arkworks")]
+    pub fn to_arkworks(&self) -> ark_bn254::G2Affine {
+        use ark_bn254::{Fq, Fq2, G2Affine};
+        use ark_ff::PrimeField;
+
+        let x0_point = Fq::from_le_bytes_mod_order(&self.x0.to_le_bytes_vec());
+        let x1_point = Fq::from_le_bytes_mod_order(&self.x1.to_le_bytes_vec());
+
+        let x = Fq2 {
+            c0: x1_point,
+            c1: x0_point,
+        };
+
+        let y0_point = Fq::from_le_bytes_mod_order(&self.y0.to_le_bytes_vec());
+        let y1_point = Fq::from_le_bytes_mod_order(&self.y1.to_le_bytes_vec());
+
+        let y = Fq2 {
+            c0: y1_point,
+            c1: y0_point,
+        };
+
+        G2Affine::new(x, y)
     }
 }
