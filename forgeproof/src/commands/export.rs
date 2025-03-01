@@ -25,7 +25,7 @@ impl Args {
         match (&triple.algorithm, &triple.implementation, &self.target) {
             (ZKProofAlgorithm::Groth16, ZKProofImplementation::Snarkjs, Target::EVM) => {
                 let vk =
-                    proof_forge_input_snarkjs::groth16::VerificationKey::from_str(&verifying_key)?;
+                    proof_forge_input_snarkjs::groth16::VerifyingKey::from_str(&verifying_key)?;
 
                 let vk = vk.into_core_type()?;
 

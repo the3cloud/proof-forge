@@ -1,9 +1,9 @@
 use anyhow::Result;
-use proof_forge_core::groth16::VerificationKey;
+use proof_forge_core::groth16::VerifyingKey;
 
 use std::fmt::Write;
 
-pub fn build_validate(vkey: &VerificationKey) -> Result<String> {
+pub fn build_validate(vkey: &VerifyingKey) -> Result<String> {
     let mut s = String::new();
 
     for i in 0..vkey.ic.len() - 1 {

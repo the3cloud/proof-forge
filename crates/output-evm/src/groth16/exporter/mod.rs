@@ -1,11 +1,11 @@
 use anyhow::Result;
-use proof_forge_core::groth16::VerificationKey;
+use proof_forge_core::groth16::VerifyingKey;
 
 mod build_linear;
 mod build_validate;
 mod build_vkey;
 
-pub fn build_verifier(vkey: &VerificationKey) -> Result<String> {
+pub fn build_verifier(vkey: &VerifyingKey) -> Result<String> {
     let s = include_str!("verifier.sol.template");
 
     let s = s
@@ -29,7 +29,7 @@ mod tests {
 
     #[test]
     fn test_build_verifier() {
-        let vkey: VerificationKey =
+        let vkey: VerifyingKey =
             serde_json::from_str(include_str!("../../../testdata/verifying_key.json")).unwrap();
 
         let s = build_verifier(&vkey).unwrap();

@@ -11,7 +11,8 @@ regex = { workspace = true }
 
 ark-ff = { workspace = true, optional = true }
 ark-bn254 = { workspace = true, optional = true }
+ark-groth16 = { workspace = true, optional = true }
 
 [features]
 default = []
-arkworks = ["ark-bn254", "ark-ff"]
+arkworks = ["ark-ff", "ark-bn254", "ark-groth16"]

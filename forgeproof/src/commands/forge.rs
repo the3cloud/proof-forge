@@ -46,9 +46,7 @@ impl Args {
             (ZKProofAlgorithm::Groth16, ZKProofImplementation::Snarkjs, Target::EVM) => {
                 if let Some(verifying_key) = verifying_key {
                     let verifying_key =
-                        proof_forge_input_snarkjs::groth16::VerificationKey::from_str(
-                            &verifying_key,
-                        )?;
+                        proof_forge_input_snarkjs::groth16::VerifyingKey::from_str(&verifying_key)?;
 
                     let vk = verifying_key.into_core_type()?;
                     let vk = proof_forge_output_evm::groth16::build_evm_verifying_key(&vk)?;

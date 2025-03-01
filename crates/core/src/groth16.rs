@@ -11,8 +11,18 @@ pub struct Proof {
     pub c: G1Point,
 }
 
+impl Proof {
+    #[cfg(feature = "arkworks")]
+    pub fn to_arkworks(&self) -> ark_groth16::Proof<ark_bn254::Bn254> {
+        let a = self.a.to_arkworks();
+        let b = self.b.to_arkworks();
+        let c = self.c.to_arkworks();
+
+        ark_groth16::Proof { a, b, c }
+    }
+}
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VerificationKey {
+pub struct VerifyingKey {
     pub curve: ZKProofCurve,
 
     pub alpha: G1Point,
@@ -22,13 +32,52 @@ pub struct VerificationKey {
     pub ic: Vec<G1Point>,
 }
 
-impl VerificationKey {
+impl VerifyingKey {
     pub fn n_public(&self) -> u64 {
         self.ic.len() as u64 - 1
+    }
+
+    #[cfg(feature = "arkworks")]
+    pub fn to_arkworks(&self) -> ark_groth16::VerifyingKey<ark_bn254::Bn254> {
+        let alpha = self.alpha.to_arkworks();
+        let beta = self.beta.to_arkworks();
+        let gamma = self.gamma.to_arkworks();
+        let delta = self.delta.to_arkworks();
+
+        let mut ic = Vec::new();
+
+        for point in self.ic.iter() {
+            ic.push(point.to_arkworks());
+        }
+
+        ark_groth16::VerifyingKey {
+            alpha_g1: alpha,
+            beta_g2: beta,
+            gamma_g2: gamma,
+            delta_g2: delta,
+            gamma_abc_g1: ic,
+        }
     }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PublicInputs {
     pub pub_signals: Vec<U256>,
+}
+
+impl PublicInputs {
+    #[cfg(feature = "arkworks")]
+    pub fn to_arkworks(&self) -> Vec<ark_bn254::Fr> {
+        use ark_ff::PrimeField;
+
+        let mut pub_signals = Vec::new();
+
+        for signal in self.pub_signals.iter() {
+            let bytes = signal.as_le_bytes();
+            let field = ark_bn254::Fr::from_le_bytes_mod_order(&bytes);
+            pub_signals.push(field);
+        }
+
+        pub_signals
+    }
 }

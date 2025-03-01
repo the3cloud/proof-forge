@@ -1,8 +1,8 @@
 use anyhow::Result;
-use proof_forge_core::groth16::VerificationKey;
+use proof_forge_core::groth16::VerifyingKey;
 
 use std::fmt::Write;
-pub fn build_vkey(vkey: &VerificationKey) -> Result<String> {
+pub fn build_vkey(vkey: &VerifyingKey) -> Result<String> {
     let mut s = String::new();
 
     writeln!(s, "    uint256 constant alphax = {};", vkey.alpha.x)?;

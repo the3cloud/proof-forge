@@ -3,7 +3,7 @@ use proof_forge_core::{groth16, G1Point, G2Point, ZKProofCurve};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct VerificationKey {
+pub struct VerifyingKey {
     pub protocol: String,
     pub curve: String,
     #[serde(rename = "nPublic")]
@@ -17,7 +17,7 @@ pub struct VerificationKey {
     pub ics: Vec<Vec<String>>,
 }
 
-impl VerificationKey {
+impl VerifyingKey {
     pub fn from_str(s: &str) -> Result<Self> {
         let vk: Self = serde_json::from_str(s)?;
 
@@ -36,7 +36,7 @@ impl VerificationKey {
         Ok(vk)
     }
 
-    pub fn into_core_type(self) -> Result<groth16::VerificationKey> {
+    pub fn into_core_type(self) -> Result<groth16::VerifyingKey> {
         let curve = match self.curve.as_str() {
             "bn254" => ZKProofCurve::BN254,
             "bn128" => ZKProofCurve::BN254,
@@ -71,7 +71,7 @@ impl VerificationKey {
             ics.push(ic);
         }
 
-        Ok(groth16::VerificationKey {
+        Ok(groth16::VerifyingKey {
             curve,
 
             alpha,
@@ -89,8 +89,8 @@ mod tests {
 
     #[test]
     fn test_verification_key() {
-        let vk = VerificationKey::from_str(include_str!("../../testdata/verification_key.json"))
-            .unwrap();
+        let vk =
+            VerifyingKey::from_str(include_str!("../../testdata/verification_key.json")).unwrap();
 
         let core_vk = vk.into_core_type().unwrap();
 

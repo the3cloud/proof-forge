@@ -1,7 +1,7 @@
 use anyhow::Result;
 use proof_forge_core::groth16;
 
-pub fn build_evm_verifying_key(vk: &groth16::VerificationKey) -> Result<Vec<u8>> {
+pub fn build_evm_verifying_key(vk: &groth16::VerifyingKey) -> Result<Vec<u8>> {
     let mut v = Vec::new();
 
     v.extend_from_slice(&vk.alpha.x.to_be_bytes::<32>());

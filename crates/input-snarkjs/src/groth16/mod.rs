@@ -1,5 +1,5 @@
-mod verification_key;
-pub use verification_key::*;
+mod verifying_key;
+pub use verifying_key::*;
 
 mod public;
 pub use public::*;
