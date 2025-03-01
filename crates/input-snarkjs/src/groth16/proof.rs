@@ -40,10 +40,10 @@ impl Proof {
 
         let a = G1Point::from_oct_str(&self.pi_a[0], &self.pi_a[1])?;
         let b = G2Point::from_oct_str(
-            &self.pi_b[0][0],
             &self.pi_b[0][1],
-            &self.pi_b[1][0],
+            &self.pi_b[0][0],
             &self.pi_b[1][1],
+            &self.pi_b[1][0],
         )?;
         let c = G1Point::from_oct_str(&self.pi_c[0], &self.pi_c[1])?;
 
@@ -60,6 +60,7 @@ mod tests {
         let proof = Proof::from_str(include_str!("../../testdata/proof.json")).unwrap();
         let core_proof = proof.into_core_type().unwrap();
 
-        println!("{:#?}", core_proof);
+        let s = serde_json::to_string(&core_proof).unwrap();
+        println!("{}", s);
     }
 }
