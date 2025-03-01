@@ -9,3 +9,5 @@ proof-forge-core = { workspace = true, features = ["arkworks"] }
 anyhow = { workspace = true }
 
 ark-serialize = { workspace = true }
+
+hex = { workspace = true }

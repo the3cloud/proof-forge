@@ -1,5 +1,7 @@
 use anyhow::Result;
-use proof_forge_core::{Triple, ZKProofAlgorithm, ZKProofImplementation};
+use proof_forge_core::{Triple, ZKProofAlgorithm, ZKProofCurve, ZKProofImplementation};
+
+use crate::exporter;
 
 use super::target::Target;
 
@@ -22,16 +24,29 @@ impl Args {
         let triple = Triple::new(&self.input_triple)?;
         let verifying_key = std::fs::read_to_string(&self.verifying_key_path)?;
 
-        match (&triple.algorithm, &triple.implementation, &self.target) {
-            (ZKProofAlgorithm::Groth16, ZKProofImplementation::Snarkjs, Target::EVM) => {
-                let vk =
-                    proof_forge_input_snarkjs::groth16::VerifyingKey::from_str(&verifying_key)?;
+        match (
+            &triple.algorithm,
+            &triple.implementation,
+            &triple.curve,
+            &self.target,
+        ) {
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Snarkjs,
+                ZKProofCurve::BN254,
+                Target::EVM,
+            ) => {
+                exporter::groth16_snarkjs_bn254_evm::export(&verifying_key, &self.output_path)?;
 
-                let vk = vk.into_core_type()?;
-
-                let sol = proof_forge_output_evm::groth16::build_verifier(&vk)?;
-
-                std::fs::write(self.output_path, sol)?;
+                Ok(())
+            }
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Snarkjs,
+                ZKProofCurve::BN254,
+                Target::Sui,
+            ) => {
+                exporter::groth16_snarkjs_bn254_sui::export(&verifying_key, &self.output_path)?;
 
                 Ok(())
             }

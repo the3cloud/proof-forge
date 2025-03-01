@@ -1337,6 +1337,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "ark-serialize 0.5.0",
+ "hex",
  "proof-forge-core",
 ]
 
