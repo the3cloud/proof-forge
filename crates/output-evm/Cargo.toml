@@ -1,5 +1,5 @@
 [package]
-name = "proof-forge-output-solidity"
+name = "proof-forge-output-evm"
 version.workspace = true
 edition.workspace = true
 

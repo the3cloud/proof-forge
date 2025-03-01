@@ -3,7 +3,7 @@ resolver = "2"
 members = [
     "crates/core",
     "crates/input-snarkjs",
-    "crates/output-solidity",
+    "crates/output-evm",
     "forgeproof",
 ]
 
@@ -21,7 +21,7 @@ anyhow = "1.0.95"
 
 proof-forge-core = { path = "crates/core" }
 proof-forge-input-snarkjs = { path = "crates/input-snarkjs" }
-proof-forge-output-solidity = { path = "crates/output-solidity" }
+proof-forge-output-evm = { path = "crates/output-evm" }
 clap = { version = "4.5.18", features = ["derive"] }
 
 regex = "1.11.1"

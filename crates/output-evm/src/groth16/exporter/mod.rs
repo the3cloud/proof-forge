@@ -6,7 +6,7 @@ mod build_validate;
 mod build_vkey;
 
 pub fn build_verifier(vkey: &VerificationKey) -> Result<String> {
-    let s = include_str!("../verifier.sol.template");
+    let s = include_str!("verifier.sol.template");
 
     let s = s
         .replace("<%verification_key_data%>", &build_vkey::build_vkey(vkey)?)

@@ -2,18 +2,18 @@ use alloy_primitives::U256;
 use anyhow::Result;
 use proof_forge_core::groth16;
 
-pub struct PublicOutputs {
+pub struct PublicInputs {
     pub pub_signals: Vec<String>,
 }
 
-impl PublicOutputs {
+impl PublicInputs {
     pub fn from_str(s: &str) -> Result<Self> {
         let pub_signals: Vec<String> = serde_json::from_str(s)?;
 
         Ok(Self { pub_signals })
     }
 
-    pub fn into_core_type(self) -> Result<groth16::PublicOutputs> {
+    pub fn into_core_type(self) -> Result<groth16::PublicInputs> {
         let mut pub_signals = Vec::new();
 
         for signal in self.pub_signals {
@@ -21,7 +21,7 @@ impl PublicOutputs {
             pub_signals.push(signal);
         }
 
-        Ok(groth16::PublicOutputs { pub_signals })
+        Ok(groth16::PublicInputs { pub_signals })
     }
 }
 
@@ -32,7 +32,7 @@ mod tests {
     #[test]
     fn test_public_outputs() {
         let public_outputs =
-            PublicOutputs::from_str(include_str!("../../testdata/public.json")).unwrap();
+            PublicInputs::from_str(include_str!("../../testdata/public.json")).unwrap();
 
         let core_public_outputs = public_outputs.into_core_type().unwrap();
 

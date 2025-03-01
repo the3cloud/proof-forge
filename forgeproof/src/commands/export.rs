@@ -29,7 +29,7 @@ impl Args {
 
                 let vk = vk.into_core_type()?;
 
-                let sol = proof_forge_output_solidity::groth16::build_verifier(&vk)?;
+                let sol = proof_forge_output_evm::groth16::build_verifier(&vk)?;
 
                 std::fs::write(self.output_path, sol)?;
 

@@ -652,7 +652,7 @@ dependencies = [
  "hex",
  "proof-forge-core",
  "proof-forge-input-snarkjs",
- "proof-forge-output-solidity",
+ "proof-forge-output-evm",
 ]
 
 [[package]]
@@ -1004,7 +1004,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "proof-forge-output-solidity"
+name = "proof-forge-output-evm"
 version = "0.1.0"
 dependencies = [
  "anyhow",

@@ -29,6 +29,6 @@ impl VerificationKey {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PublicOutputs {
+pub struct PublicInputs {
     pub pub_signals: Vec<U256>,
 }

@@ -54,14 +54,12 @@ You can forge output of zkproof implementation to used them in generic verifier 
 
 ```bash
 # forge verifying key
-forgeproof forge --input-triple <path-to-proof> --verifying-key-path <path-to-verifying-key> <path-to-output>
-
-# forge proof
-forgeproof forge --input-triple <path-to-proof> --proof-path <path-to-proof> <path-to-output>
-
-# forge public input
-forgeproof forge --input-triple <path-to-proof> --public-input-path <path-to-public-input> <path-to-output>
-
+forgeproof forge \
+  --input-triple "path-to-proof" \
+  --target evm \
+  --verifying-key-path "path-to-verifying-key" \
+  --proof-path "path-to-proof" \
+  --public-input-path "path-to-public-input" \
 ```
 
 ## Proof Triple

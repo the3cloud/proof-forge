@@ -2,6 +2,7 @@ use anyhow::Result;
 
 // mod calldata;
 mod export;
+mod forge;
 mod target;
 
 #[derive(Debug, clap::Parser)]
@@ -14,8 +15,7 @@ impl Args {
     pub fn run(self) -> Result<()> {
         match self.subcommand {
             Subcommand::Export(args) => args.run(),
-            // Subcommand::Calldata(args) => args.run(),
-            Subcommand::Forge => todo!(),
+            Subcommand::Forge(args) => args.run(),
         }
     }
 }
@@ -23,6 +23,5 @@ impl Args {
 #[derive(Debug, clap::Subcommand)]
 pub enum Subcommand {
     Export(export::Args),
-    // Calldata(calldata::Args),
-    Forge,
+    Forge(forge::Args),
 }
