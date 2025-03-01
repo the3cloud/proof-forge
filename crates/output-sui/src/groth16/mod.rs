@@ -1,2 +1,2 @@
-mod verifying_key;
-pub use verifying_key::*;
+mod builder;
+pub use builder::*;

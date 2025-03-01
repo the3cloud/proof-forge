@@ -4,3 +4,8 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+proof-forge-core = { workspace = true, features = ["arkworks"] }
+
+anyhow = { workspace = true }
+
+ark-serialize = { workspace = true }

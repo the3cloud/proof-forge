@@ -23,6 +23,8 @@ anyhow = "1.0.95"
 proof-forge-core = { path = "crates/core" }
 proof-forge-input-snarkjs = { path = "crates/input-snarkjs" }
 proof-forge-output-evm = { path = "crates/output-evm" }
+proof-forge-output-sui = { path = "crates/output-sui" }
+
 clap = { version = "4.5.18", features = ["derive"] }
 
 regex = "1.11.1"
@@ -32,3 +34,4 @@ hex = "0.4.3"
 ark-ff = "0.5.0"
 ark-bn254 = "0.5.0"
 ark-groth16 = "0.5.0"
+ark-serialize = "0.5.0"

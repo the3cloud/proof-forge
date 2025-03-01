@@ -1,4 +1,4 @@
-use anyhow::{Ok, Result};
+use anyhow::Result;
 use proof_forge_core::{groth16, G1Point, G2Point, ZKProofCurve};
 use serde::{Deserialize, Serialize};
 

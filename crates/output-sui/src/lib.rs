@@ -1,2 +1,1 @@
-mod groth16;
-pub use groth16::*;
+pub mod groth16;

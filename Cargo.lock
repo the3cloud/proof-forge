@@ -940,6 +940,7 @@ dependencies = [
  "proof-forge-core",
  "proof-forge-input-snarkjs",
  "proof-forge-output-evm",
+ "proof-forge-output-sui",
 ]
 
 [[package]]
@@ -1333,6 +1334,11 @@ dependencies = [
 [[package]]
 name = "proof-forge-output-sui"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ark-serialize 0.5.0",
+ "proof-forge-core",
+]
 
 [[package]]
 name = "proptest"

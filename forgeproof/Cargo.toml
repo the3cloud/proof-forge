@@ -13,3 +13,4 @@ hex = { workspace = true }
 proof-forge-core = { workspace = true }
 proof-forge-input-snarkjs = { workspace = true }
 proof-forge-output-evm = { workspace = true }
+proof-forge-output-sui = { workspace = true }
