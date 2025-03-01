@@ -46,7 +46,11 @@
 If you want to export evm verifier contract from snarkjs, you can use the following command:
 
 ```bash
-forgeproof export --input-triple groth16-snarkjs-bn254 --verifying-key-path <path-to-verifying-key> --target evm <path-to-output>
+forgeproof export \
+  --input-triple groth16-snarkjs-bn254 \
+  --verifying-key-path <path-to-verifying-key> \
+  --target evm \
+  <path-to-output>
 ```
 
 ### Forge VerifyingKey / Proof / PublicInput
