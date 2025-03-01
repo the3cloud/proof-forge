@@ -24,7 +24,8 @@
 - EVM
 - [ ] EVM:Prague (support bls12-381)
 - [ ] Solana
-- [ ] Move (sui, aptos)
+- Move (sui)
+- [ ] Move (aptos)
 - [ ] Cairo
 - [ ] Ton
 
