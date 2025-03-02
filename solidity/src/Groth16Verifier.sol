@@ -17,13 +17,17 @@ contract Groth16Verifier {
     uint16 constant pLastMem = 896;
 
     function verifyProof(
+        uint256[] calldata _verifyingKey,
         uint256[8] calldata _proof,
-        uint256[] calldata _verificationKey,
         uint256[] calldata _pubSignals
     ) public view returns (bool) {
         require(
-            _verificationKey.length >= 16,
-            "Invalid verification key length"
+            _verifyingKey.length >= 16,
+            "verifying key length must be >= 16"
+        );
+        require(
+            _pubSignals.length * 2 + 16 == _verifyingKey.length,
+            "invalid pubSignals length"
         );
 
         assembly {
@@ -60,39 +64,32 @@ contract Groth16Verifier {
                 }
             }
 
-            function checkPairing(proof, pubSignals, verificationKey, pMem)
-                -> isOk
-            {
+            function checkPairing(
+                verifyingKey,
+                proof,
+                pubSignals,
+                pubSignalsLength,
+                pMem
+            ) -> isOk {
                 let _pPairing := add(pMem, pPairing)
                 let _pVk := add(pMem, pVk)
 
-                mstore(_pVk, calldataload(add(verificationKey, 512)))
-                mstore(add(_pVk, 32), calldataload(add(verificationKey, 544)))
+                mstore(_pVk, calldataload(add(verifyingKey, 448)))
+                mstore(add(_pVk, 32), calldataload(add(verifyingKey, 480)))
 
                 // Compute the linear combination vk_x
                 for {
                     let i := 0
-                } lt(i, sub(calldataload(verificationKey), 17)) {
+                } lt(i, pubSignalsLength) {
                     i := add(i, 1)
                 } {
-                    let ICx := calldataload(
-                        add(verificationKey, add(576, mul(i, 64)))
-                    )
-                    let ICy := calldataload(
-                        add(verificationKey, add(608, mul(i, 64)))
-                    )
-
                     g1_mulAccC(
                         _pVk,
-                        ICx,
-                        ICy,
+                        calldataload(add(add(verifyingKey, 512), mul(i, 64))),
+                        calldataload(add(add(verifyingKey, 544), mul(i, 64))),
                         calldataload(add(pubSignals, mul(i, 32)))
                     )
                 }
-
-                // g1_mulAccC(_pVk, IC1x, IC1y, calldataload(add(pubSignals, 0)))
-
-                // g1_mulAccC(_pVk, IC2x, IC2y, calldataload(add(pubSignals, 32)))
 
                 // -A
                 mstore(_pPairing, calldataload(proof))
@@ -108,31 +105,19 @@ contract Groth16Verifier {
                 mstore(add(_pPairing, 160), calldataload(add(proof, 160)))
 
                 // alpha1
-                mstore(
-                    add(_pPairing, 192),
-                    calldataload(add(verificationKey, 32))
-                )
-                mstore(
-                    add(_pPairing, 224),
-                    calldataload(add(verificationKey, 64))
-                )
+                mstore(add(_pPairing, 192), calldataload(add(verifyingKey, 0)))
+                mstore(add(_pPairing, 224), calldataload(add(verifyingKey, 32)))
 
                 // beta2
-                mstore(
-                    add(_pPairing, 256),
-                    calldataload(add(verificationKey, 96))
-                )
-                mstore(
-                    add(_pPairing, 288),
-                    calldataload(add(verificationKey, 128))
-                )
+                mstore(add(_pPairing, 256), calldataload(add(verifyingKey, 64)))
+                mstore(add(_pPairing, 288), calldataload(add(verifyingKey, 96)))
                 mstore(
                     add(_pPairing, 320),
-                    calldataload(add(verificationKey, 160))
+                    calldataload(add(verifyingKey, 128))
                 )
                 mstore(
                     add(_pPairing, 352),
-                    calldataload(add(verificationKey, 192))
+                    calldataload(add(verifyingKey, 160))
                 )
 
                 // vk_x
@@ -142,19 +127,19 @@ contract Groth16Verifier {
                 // gamma2
                 mstore(
                     add(_pPairing, 448),
-                    calldataload(add(verificationKey, 224))
+                    calldataload(add(verifyingKey, 192))
                 )
                 mstore(
                     add(_pPairing, 480),
-                    calldataload(add(verificationKey, 256))
+                    calldataload(add(verifyingKey, 224))
                 )
                 mstore(
                     add(_pPairing, 512),
-                    calldataload(add(verificationKey, 288))
+                    calldataload(add(verifyingKey, 256))
                 )
                 mstore(
                     add(_pPairing, 544),
-                    calldataload(add(verificationKey, 320))
+                    calldataload(add(verifyingKey, 288))
                 )
 
                 // C
@@ -164,19 +149,19 @@ contract Groth16Verifier {
                 // delta2
                 mstore(
                     add(_pPairing, 640),
-                    calldataload(add(verificationKey, 352))
+                    calldataload(add(verifyingKey, 320))
                 )
                 mstore(
                     add(_pPairing, 672),
-                    calldataload(add(verificationKey, 384))
+                    calldataload(add(verifyingKey, 352))
                 )
                 mstore(
                     add(_pPairing, 704),
-                    calldataload(add(verificationKey, 416))
+                    calldataload(add(verifyingKey, 384))
                 )
                 mstore(
                     add(_pPairing, 736),
-                    calldataload(add(verificationKey, 448))
+                    calldataload(add(verifyingKey, 416))
                 )
 
                 let success := staticcall(
@@ -195,25 +180,22 @@ contract Groth16Verifier {
             mstore(0x40, add(pMem, pLastMem))
 
             // Validate that all evaluations ∈ F
+            let pubSignalsLength := _pubSignals.length
 
             for {
                 let i := 0
-            } lt(i, _pubSignals.offset) {
+            } lt(i, pubSignalsLength) {
                 i := add(i, 1)
             } {
-                let pubSignalOffset := add(
-                    _pubSignals.offset,
-                    add(0x20, mul(i, 32))
-                )
-
-                checkField(calldataload(pubSignalOffset))
+                checkField(calldataload(add(_pubSignals.offset, mul(i, 32))))
             }
 
             // Validate all evaluations
             let isValid := checkPairing(
+                _verifyingKey.offset,
                 _proof,
                 _pubSignals.offset,
-                _verificationKey.offset,
+                pubSignalsLength,
                 pMem
             )
 

@@ -9,12 +9,19 @@ pub fn build_evm_verifying_key(vk: &groth16::VerifyingKey, format: &str) -> Resu
         write!(v, "{},{},", vk.alpha.x, vk.alpha.y)?;
         write!(v, "{},{},", vk.beta.x0, vk.beta.x1)?;
         write!(v, "{},{},", vk.beta.y0, vk.beta.y1)?;
-        write!(v, "{},{}", vk.gamma.x0, vk.gamma.x1)?;
-        write!(v, "{},{}", vk.gamma.y0, vk.gamma.y1)?;
+        write!(v, "{},{},", vk.gamma.x0, vk.gamma.x1)?;
+        write!(v, "{},{},", vk.gamma.y0, vk.gamma.y1)?;
         write!(v, "{},{},", vk.delta.x0, vk.delta.x1)?;
-        write!(v, "{},{}", vk.delta.y0, vk.delta.y1)?;
-        for ic in &vk.ic {
+        write!(v, "{},{},", vk.delta.y0, vk.delta.y1)?;
+
+        let mut it = vk.ic.iter();
+
+        if let Some(ic) = it.next() {
             write!(v, "{},{}", ic.x, ic.y)?;
+        }
+
+        for ic in it {
+            write!(v, ",{},{}", ic.x, ic.y)?;
         }
 
         write!(v, "]")?;
