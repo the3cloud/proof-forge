@@ -1,0 +1,6 @@
+[package]
+name = "proof-forge-input-arkworks"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

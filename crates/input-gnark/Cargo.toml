@@ -1,0 +1,19 @@
+[package]
+name = "proof-forge-input-gnark"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+alloy-primitives = { workspace = true }
+
+ark-ec = { workspace = true }
+ark-ff = { workspace = true }
+ark-bn254 = { workspace = true }
+ark-serialize = { workspace = true }
+
+anyhow = { workspace = true }
+
+proof-forge-core = { workspace = true }
+
+[dev-dependencies]
+hex = { workspace = true }
