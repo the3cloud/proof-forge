@@ -26,8 +26,11 @@ serde_json = "1.0.105"
 anyhow = "1.0.95"
 
 proof-forge-core = { path = "crates/core" }
+
 proof-forge-input-snarkjs = { path = "crates/input-snarkjs" }
 proof-forge-input-gnark = { path = "crates/input-gnark" }
+proof-forge-input-arkworks = { path = "crates/input-arkworks" }
+
 proof-forge-output-evm = { path = "crates/output-evm" }
 proof-forge-output-sui = { path = "crates/output-sui" }
 

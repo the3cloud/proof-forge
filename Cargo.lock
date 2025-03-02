@@ -963,6 +963,7 @@ dependencies = [
  "hex",
  "log",
  "proof-forge-core",
+ "proof-forge-input-arkworks",
  "proof-forge-input-gnark",
  "proof-forge-input-snarkjs",
  "proof-forge-output-evm",

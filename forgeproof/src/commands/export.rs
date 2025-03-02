@@ -66,6 +66,24 @@ impl Args {
             ) => {
                 exporter::groth16_gnark_bn254_sui::export(&verifying_key, &self.output_path)?;
             }
+            // groth16-arkworks-bn254-evm
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Arkworks,
+                ZKProofCurve::BN254,
+                Target::EVM,
+            ) => {
+                exporter::groth16_arkworks_bn254_evm::export(&verifying_key, &self.output_path)?;
+            }
+            // groth16-arkworks-bn254-sui
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Arkworks,
+                ZKProofCurve::BN254,
+                Target::Sui,
+            ) => {
+                exporter::groth16_arkworks_bn254_sui::export(&verifying_key, &self.output_path)?;
+            }
             _ => {
                 return Err(anyhow::anyhow!(
                     "Unsupported algorithm: {:?}, implementation: {:?}, curve: {:?}, target: {:?}",

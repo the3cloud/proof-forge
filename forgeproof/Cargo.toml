@@ -11,8 +11,11 @@ anyhow = { workspace = true }
 hex = { workspace = true }
 
 proof-forge-core = { workspace = true }
+
 proof-forge-input-snarkjs = { workspace = true }
 proof-forge-input-gnark = { workspace = true }
+proof-forge-input-arkworks = { workspace = true }
+
 proof-forge-output-evm = { workspace = true }
 proof-forge-output-sui = { workspace = true }
 
