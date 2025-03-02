@@ -5,7 +5,7 @@ use proof_forge_core::{Triple, ZKProofAlgorithm, ZKProofCurve, ZKProofImplementa
 
 use crate::forge;
 
-use super::target::Target;
+use super::target::{Target, TargetFormat};
 
 #[derive(Debug, clap::Parser)]
 pub struct Args {
@@ -23,6 +23,9 @@ pub struct Args {
 
     #[clap(long)]
     target: Target,
+
+    #[clap(long, default_value = "foundry")]
+    target_format: TargetFormat,
 }
 
 impl Args {
@@ -56,7 +59,12 @@ impl Args {
                 ZKProofCurve::BN254,
                 Target::EVM,
             ) => {
-                forge::groth16_snarkjs_bn254_evm::build(verifying_key, proof, public_input)?;
+                forge::groth16_snarkjs_bn254_evm::build(
+                    verifying_key,
+                    proof,
+                    public_input,
+                    self.target_format,
+                )?;
             }
             (
                 ZKProofAlgorithm::Groth16,

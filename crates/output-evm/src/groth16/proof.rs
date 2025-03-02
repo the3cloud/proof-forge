@@ -1,19 +1,18 @@
 use anyhow::Result;
 use proof_forge_core::groth16::Proof;
+use std::fmt::Write;
 
-pub fn build_evm_proof(proof: &Proof) -> Result<Vec<u8>> {
-    let mut v = Vec::new();
+pub fn build_evm_proof(proof: &Proof, format: &str) -> Result<String> {
+    let mut v = String::new();
 
-    v.extend_from_slice(&proof.a.x.to_be_bytes::<32>());
-    v.extend_from_slice(&proof.a.y.to_be_bytes::<32>());
-
-    v.extend_from_slice(&proof.b.x0.to_be_bytes::<32>());
-    v.extend_from_slice(&proof.b.x1.to_be_bytes::<32>());
-    v.extend_from_slice(&proof.b.y0.to_be_bytes::<32>());
-    v.extend_from_slice(&proof.b.y1.to_be_bytes::<32>());
-
-    v.extend_from_slice(&proof.c.x.to_be_bytes::<32>());
-    v.extend_from_slice(&proof.c.y.to_be_bytes::<32>());
+    if format == "foundry" {
+        write!(v, "[")?;
+        write!(v, "{},{},", proof.a.x, proof.a.y)?;
+        write!(v, "{},{},", proof.b.x0, proof.b.x1)?;
+        write!(v, "{},{},", proof.b.y0, proof.b.y1)?;
+        write!(v, "{},{}", proof.c.x, proof.c.y)?;
+        write!(v, "]")?;
+    }
 
     Ok(v)
 }

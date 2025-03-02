@@ -3,7 +3,7 @@ use anyhow::Result;
 // mod calldata;
 mod export;
 mod forge;
-mod target;
+pub mod target;
 
 #[derive(Debug, clap::Parser)]
 pub struct Args {
