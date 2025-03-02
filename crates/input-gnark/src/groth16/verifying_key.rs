@@ -74,6 +74,11 @@ impl VerifyingKey {
 
 #[cfg(test)]
 mod tests {
+    use ark_bn254::Bn254;
+    use ark_groth16::Groth16;
+
+    use crate::groth16::{Proof, PublicInputs};
+
     use super::*;
 
     #[test]
@@ -83,5 +88,28 @@ mod tests {
 
         let vk = vk.into_core_type().unwrap();
         println!("vk: {:#?}", vk);
+    }
+
+    #[test]
+    fn test_verify() {
+        let bytes = hex::decode("e1a63b5b58ffa75197f1389ea0a1a0a2808cf42770257cbff750c9d085f14889a1c8e8ce5edabfe86507e9cac3f91a02d1bea91d32f5de992777cff55b67d5e5e0460cebb19f25a19debd1298158210f7ca4d0e8f43008fb73c86ea4cbc2f3f82633a327e117a2761c0bf0e6ae7795b5286d700f8c2b328dcf3a7899544e0ae5efab89be05bc46c081b24f748da6b5db23628cdcf697f9db431312fd456b58e805bf842b5cf976afff93d293cbfc619b3d181319edeb9f53a90c932a72363733e45ea9262164155e7099b10a135cb0a42087d1aa52d5c35e716cfc80915ddff3c6d28eb17c5f4aff3081a2af8f1099b8c23588d728111b0c30f72f732425dc691ef7f1ffe8eafdd59683b2ed502e7c1127d004bf2239803e1143c55e582fbe1800000002ad1290a3cf0a0dbd8231016326b20fd33697fbd70dba86286917db723e880fdc8685e1da7adf55b9b2edb4dc42cedbe030d16b048b0f9a40ebaba36d558a171c0000000000000000").unwrap();
+        let vk = VerifyingKey::from_gnark_compressed_bytes(&bytes).unwrap();
+        let vk: groth16::VerifyingKey = vk.into_core_type().unwrap();
+        let vk = vk.to_arkworks();
+        println!("vk: {:#?}", vk);
+
+        let bytes = hex::decode("8bb91240454d63a7b9d6641e7788759a3bb7052e424c37f7258e94c65f84164de7aa63ae5768ffbfbe22688751456e6414ec270b31d8ebb238fafcb8db99cba7223c6b4775d6b8a33a0a44c2da947b9241fe17abbfa43dafd987f79112543b18ea01274a97a09d65009bfa37820fa8df560566a927ba7c2f9340043420afb777000000004000000000000000000000000000000000000000000000000000000000000000").unwrap();
+        let proof = Proof::from_gnark_compressed_bytes(&bytes).unwrap();
+        let proof = proof.into_core_type().unwrap();
+        let proof = proof.to_arkworks();
+
+        let bytes = hex::decode("0000000100000000000000010000000000000000000000000000000000000000000000000000000000000021").unwrap();
+        let public_inputs = PublicInputs::from_gnark_compressed_bytes(&bytes).unwrap();
+        let public_inputs = public_inputs.into_core_type().unwrap();
+        let public_inputs = public_inputs.to_arkworks();
+
+        let pvk = ark_groth16::prepare_verifying_key(&vk);
+        let result = Groth16::<Bn254>::verify_proof(&pvk, &proof, &public_inputs).unwrap();
+        println!("result: {}", result);
     }
 }

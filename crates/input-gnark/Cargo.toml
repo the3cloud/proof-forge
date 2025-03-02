@@ -17,3 +17,6 @@ proof-forge-core = { workspace = true }
 
 [dev-dependencies]
 hex = { workspace = true }
+
+ark-groth16 = { workspace = true }
+proof-forge-core = { workspace = true, features = ["arkworks"] }

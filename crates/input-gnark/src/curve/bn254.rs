@@ -59,21 +59,21 @@ impl G2Point {
     pub fn into_core_type(self) -> Result<proof_forge_core::G2Point> {
         let (x, y) = self.x.xy().ok_or(anyhow!("Invalid G1 point"))?;
 
-        let x0 = x.c0.into_bigint().to_bytes_be();
+        let x0 = x.c1.into_bigint().to_bytes_be();
         let x0 = U256::from_be_slice(&x0);
 
-        let x1 = x.c1.into_bigint().to_bytes_be();
+        let x1 = x.c0.into_bigint().to_bytes_be();
         let x1 = U256::from_be_slice(&x1);
 
         // let q: U256 =
         //     "21888242871839275222246405745257275088696311157297823662689037894645226208583"
         //         .parse()?;
 
-        let y0 = y.c0.into_bigint().to_bytes_be();
+        let y0 = y.c1.into_bigint().to_bytes_be();
         let y0 = U256::from_be_slice(&y0);
         // let y0 = (q - y0) % q;
 
-        let y1 = y.c1.into_bigint().to_bytes_be();
+        let y1 = y.c0.into_bigint().to_bytes_be();
         let y1 = U256::from_be_slice(&y1);
         // let y1 = (q - y1) % q;
 

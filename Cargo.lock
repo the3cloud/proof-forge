@@ -1324,6 +1324,7 @@ dependencies = [
  "ark-bn254",
  "ark-ec",
  "ark-ff 0.5.0",
+ "ark-groth16",
  "ark-serialize 0.5.0",
  "hex",
  "proof-forge-core",
