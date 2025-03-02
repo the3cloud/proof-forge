@@ -13,11 +13,11 @@
 ### zkProof Implementation
 
 - snarkjs
-- [ ] arkworks
-- [ ] gnark
+- gnark
+- arkworks
 - [ ] zkvm
-  - [ ] risc0
-  - [ ] sp1
+  - risc0
+  - sp1
 
 ### Support Chain
 

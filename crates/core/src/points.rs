@@ -25,6 +25,16 @@ impl G1Point {
 
         ark_bn254::G1Affine::new(x_point, y_point)
     }
+
+    #[cfg(feature = "arkworks")]
+    pub fn from_arkworks(point: ark_bn254::G1Affine) -> Self {
+        use ark_ff::{BigInteger, PrimeField};
+
+        let x = U256::from_be_slice(&point.x.into_bigint().to_bytes_be());
+        let y = U256::from_be_slice(&point.y.into_bigint().to_bytes_be());
+
+        Self { x, y }
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -67,5 +77,20 @@ impl G2Point {
         };
 
         G2Affine::new(x, y)
+    }
+
+    #[cfg(feature = "arkworks")]
+    pub fn from_arkworks(point: ark_bn254::G2Affine) -> Result<Self> {
+        use ark_ec::AffineRepr;
+        use ark_ff::{BigInteger, PrimeField};
+
+        let (x, y) = point.xy().ok_or(anyhow::anyhow!("Invalid G2 point"))?;
+
+        let x0 = U256::from_be_slice(&x.c1.into_bigint().to_bytes_be());
+        let x1 = U256::from_be_slice(&x.c0.into_bigint().to_bytes_be());
+        let y0 = U256::from_be_slice(&y.c1.into_bigint().to_bytes_be());
+        let y1 = U256::from_be_slice(&y.c0.into_bigint().to_bytes_be());
+
+        Ok(Self { x0, x1, y0, y1 })
     }
 }

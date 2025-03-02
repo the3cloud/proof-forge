@@ -20,6 +20,20 @@ impl Proof {
 
         ark_groth16::Proof { a, b, c }
     }
+
+    #[cfg(feature = "arkworks")]
+    pub fn from_arkworks(proof: ark_groth16::Proof<ark_bn254::Bn254>) -> anyhow::Result<Self> {
+        let a = G1Point::from_arkworks(proof.a);
+        let b = G2Point::from_arkworks(proof.b)?;
+        let c = G1Point::from_arkworks(proof.c);
+
+        Ok(Self {
+            curve: ZKProofCurve::BN254,
+            a,
+            b,
+            c,
+        })
+    }
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct VerifyingKey {
@@ -58,6 +72,31 @@ impl VerifyingKey {
             gamma_abc_g1: ic,
         }
     }
+
+    #[cfg(feature = "arkworks")]
+    pub fn from_arkworks(
+        verifying_key: ark_groth16::VerifyingKey<ark_bn254::Bn254>,
+    ) -> anyhow::Result<Self> {
+        let alpha = G1Point::from_arkworks(verifying_key.alpha_g1);
+        let beta = G2Point::from_arkworks(verifying_key.beta_g2)?;
+        let gamma = G2Point::from_arkworks(verifying_key.gamma_g2)?;
+        let delta = G2Point::from_arkworks(verifying_key.delta_g2)?;
+
+        let mut ic = Vec::new();
+
+        for point in verifying_key.gamma_abc_g1 {
+            ic.push(G1Point::from_arkworks(point));
+        }
+
+        Ok(Self {
+            curve: ZKProofCurve::BN254,
+            alpha,
+            beta,
+            gamma,
+            delta,
+            ic,
+        })
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -79,5 +118,20 @@ impl PublicInputs {
         }
 
         pub_signals
+    }
+
+    #[cfg(feature = "arkworks")]
+    pub fn from_arkworks(public_inputs: Vec<ark_bn254::Fr>) -> anyhow::Result<Self> {
+        use ark_ff::{BigInteger, PrimeField};
+
+        let mut pub_signals = Vec::new();
+
+        for field in public_inputs.iter() {
+            let bytes = field.into_bigint().to_bytes_be();
+            let signal = U256::from_be_slice(&bytes);
+            pub_signals.push(signal);
+        }
+
+        Ok(Self { pub_signals })
     }
 }

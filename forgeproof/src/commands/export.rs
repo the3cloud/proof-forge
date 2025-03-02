@@ -37,8 +37,6 @@ impl Args {
                 Target::EVM,
             ) => {
                 exporter::groth16_snarkjs_bn254_evm::export(&verifying_key, &self.output_path)?;
-
-                Ok(())
             }
             (
                 ZKProofAlgorithm::Groth16,
@@ -47,13 +45,36 @@ impl Args {
                 Target::Sui,
             ) => {
                 exporter::groth16_snarkjs_bn254_sui::export(&verifying_key, &self.output_path)?;
-
-                Ok(())
             }
-            _ => Err(anyhow::anyhow!(
-                "Unsupported implementation: {:?}",
-                triple.implementation
-            )),
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Gnark,
+                ZKProofCurve::BN254,
+                Target::EVM,
+            ) => {
+                exporter::groth16_gnark_bn254_evm::export(&verifying_key, &self.output_path)?;
+            }
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Gnark,
+                ZKProofCurve::BN254,
+                Target::Sui,
+            ) => {
+                exporter::groth16_gnark_bn254_sui::export(&verifying_key, &self.output_path)?;
+            }
+            _ => {
+                return Err(anyhow::anyhow!(
+                    "Unsupported algorithm: {:?}, implementation: {:?}, curve: {:?}, target: {:?}",
+                    triple.algorithm,
+                    triple.implementation,
+                    triple.curve,
+                    self.target
+                ))
+            }
         }
+
+        log::info!("Exported verifier to {}", self.output_path);
+
+        Ok(())
     }
 }

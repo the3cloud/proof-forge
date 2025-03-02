@@ -15,6 +15,9 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace.dependencies]
+log = "0.4.21"
+env_logger = "0.11.6"
+
 alloy-primitives = "0.8.21"
 
 serde = { version = "1.0.215", features = ["derive"] }
@@ -24,6 +27,7 @@ anyhow = "1.0.95"
 
 proof-forge-core = { path = "crates/core" }
 proof-forge-input-snarkjs = { path = "crates/input-snarkjs" }
+proof-forge-input-gnark = { path = "crates/input-gnark" }
 proof-forge-output-evm = { path = "crates/output-evm" }
 proof-forge-output-sui = { path = "crates/output-sui" }
 
