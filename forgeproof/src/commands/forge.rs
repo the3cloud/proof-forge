@@ -53,6 +53,7 @@ impl Args {
             &triple.curve,
             &self.target,
         ) {
+            // groth16-snarkjs-bn254-evm
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Snarkjs,
@@ -66,6 +67,7 @@ impl Args {
                     self.target_format,
                 )?;
             }
+            // groth16-snarkjs-bn254-sui
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Snarkjs,
@@ -73,6 +75,29 @@ impl Args {
                 Target::Sui,
             ) => {
                 forge::groth16_snarkjs_bn254_sui::build(verifying_key, proof, public_input)?;
+            }
+            // groth16-gnark-bn254-evm
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Gnark,
+                ZKProofCurve::BN254,
+                Target::EVM,
+            ) => {
+                forge::groth16_gnark_bn254_evm::build(
+                    verifying_key,
+                    proof,
+                    public_input,
+                    self.target_format,
+                )?;
+            }
+            // groth16-gnark-bn254-sui
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Gnark,
+                ZKProofCurve::BN254,
+                Target::Sui,
+            ) => {
+                forge::groth16_gnark_bn254_sui::build(verifying_key, proof, public_input)?;
             }
             _ => {
                 return Err(anyhow::anyhow!("Unsupported target: {:?}", self.target));

@@ -30,6 +30,7 @@ impl Args {
             &triple.curve,
             &self.target,
         ) {
+            // groth16-snarkjs-bn254-evm
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Snarkjs,
@@ -38,6 +39,7 @@ impl Args {
             ) => {
                 exporter::groth16_snarkjs_bn254_evm::export(&verifying_key, &self.output_path)?;
             }
+            // groth16-snarkjs-bn254-sui
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Snarkjs,
@@ -46,6 +48,7 @@ impl Args {
             ) => {
                 exporter::groth16_snarkjs_bn254_sui::export(&verifying_key, &self.output_path)?;
             }
+            // groth16-gnark-bn254-evm
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Gnark,
@@ -54,6 +57,7 @@ impl Args {
             ) => {
                 exporter::groth16_gnark_bn254_evm::export(&verifying_key, &self.output_path)?;
             }
+            // groth16-gnark-bn254-sui
             (
                 ZKProofAlgorithm::Groth16,
                 ZKProofImplementation::Gnark,
