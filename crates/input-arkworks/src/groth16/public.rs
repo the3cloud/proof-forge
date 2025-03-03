@@ -8,7 +8,7 @@ pub struct PublicInputs {
 }
 
 impl PublicInputs {
-    pub fn from_arkworks(inputs: &[u8]) -> Result<Self> {
+    pub fn from_bytes(inputs: &[u8]) -> Result<Self> {
         let mut res = Vec::new();
 
         let inputs = inputs.chunks(32);

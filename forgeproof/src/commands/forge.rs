@@ -99,6 +99,29 @@ impl Args {
             ) => {
                 forge::groth16_gnark_bn254_sui::build(verifying_key, proof, public_input)?;
             }
+            // groth16-arkworks-bn254-evm
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Arkworks,
+                ZKProofCurve::BN254,
+                Target::EVM,
+            ) => {
+                forge::groth16_arkworks_bn254_evm::build(
+                    verifying_key,
+                    proof,
+                    public_input,
+                    self.target_format,
+                )?;
+            }
+            // groth16-arkworks-bn254-sui
+            (
+                ZKProofAlgorithm::Groth16,
+                ZKProofImplementation::Arkworks,
+                ZKProofCurve::BN254,
+                Target::Sui,
+            ) => {
+                forge::groth16_arkworks_bn254_sui::build(verifying_key, proof, public_input)?;
+            }
             _ => {
                 return Err(anyhow::anyhow!("Unsupported target: {:?}", self.target));
             }
